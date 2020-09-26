@@ -3,4 +3,15 @@
 {% block content %}
   <h1 class="text-center">메인화면</h1>
   <hr>
+  <a href="{% url 'posts:create' %}">게시글 작성</a>
+  <hr>
+  {% for post in posts %}
+  <a class="navbar-brand text-dark" href="{% url 'posts:detail' post.pk %}">
+    <div class="row justify-content-between">
+      <div class="col"><h2>No. {{ post.pk }}</h2></div>
+      <div class="col"><h2>{{ post.title }}</h2></div>
+    </div>     
+  </a>
+  <hr>
+  {% endfor %}
 {% endblock  %}

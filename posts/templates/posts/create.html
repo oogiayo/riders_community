@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>게시글 작성하기</h1>
+  <hr>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ creation_form.as_p }}
+    <button class="btn btn-dark">작성하기</button>
+    <a href="{% url 'posts:index'%}" class="btn btn-dark">취소</a>
+  </form>
+
+{% endblock  %}

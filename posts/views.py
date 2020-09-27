@@ -34,9 +34,17 @@ def detail(request, post_pk):
 
 
 def update(request, post_pk):
-    change_form = PostChangeForm()
+    post = Post.objects.get(pk=post_pk)
+
+    if request.method == 'POST':
+        change_form = PostChangeForm(request.POST, instance=post)
+        if change_form.is_valid():
+            change_form.save()
+            return redirect('posts:detail', post_pk)
+    else:
+        change_form = PostChangeForm(instance=post)
     context = {
-        'post_pk': post_pk,
+        'post': post,
         'change_form': change_form,
     }
     return render(request, 'posts/update.html', context)

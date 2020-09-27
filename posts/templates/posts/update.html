@@ -7,7 +7,7 @@
     {% csrf_token %}
     {{ change_form.as_p }}
     <button class="btn btn-dark">수정하기</button> 
-    <a href="{% url 'posts:detail' post_pk %}" class="btn btn-dark">취소</a>
+    <a href="{% url 'posts:detail' post.pk %}" class="btn btn-dark">취소</a>
   </form>
 
 

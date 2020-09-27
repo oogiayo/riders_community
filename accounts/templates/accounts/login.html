@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>회원 로그인</h1>
+  <hr>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ login_form.as_p }}
+    <button class="btn btn-dark">로그인</button>
+    <a href="{% url 'posts:index'%}" class="btn btn-dark">취소</a>
+  </form>
+
+{% endblock  %}

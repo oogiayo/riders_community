@@ -5,7 +5,7 @@
   <hr>
   <a href="{% url 'posts:index' %}">뒤로가기</a>
   <hr>
-  <h4>{{ post.content }}</h4>
+  <h4>{{ post.content|linebreaks }}</h4>
   <hr>
   <p>작성일: {{ post.created_at }}</p>
   <p>수정일: {{ post.updated_at }}</p>

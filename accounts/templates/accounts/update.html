@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>회원정보 수정</h1>
+  <hr>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ update_form.as_p }}
+    <button class="btn btn-dark">수정하기</button>
+    <a href="{% url 'posts:index'%}" class="btn btn-dark">취소</a>
+  </form>
+  <hr>
+  <a class="mr-3" href="{% url 'accounts:password_change' %}">비밀번호 변경하기</a>
+  <a href="{% url 'accounts:delete' %}">회원 탈퇴하기</a>
+  <hr>
+
+{% endblock  %}

@@ -6,11 +6,12 @@
   <a href="{% url 'posts:create' %}">게시글 작성</a>
   <hr>
   {% for post in posts %}
+  <h5><b>작성자 : </b></h5>
   <a class="navbar-brand text-dark" href="{% url 'posts:detail' post.pk %}">
     <div class="row justify-content-between">
-      <div class="col"><h2>No. {{ post.pk }}</h2></div>
-      <div class="col"><h2>{{ post.title }}</h2></div>
-    </div>     
+      <div class="col"><h4>No. {{ post.pk }}</h4></div>
+      <div class="col"><h4>{{ post.title }}</h4></div>
+    </div>
   </a>
   <hr>
   {% endfor %}

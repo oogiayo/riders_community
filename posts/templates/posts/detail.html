@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>제목: {{ post.title }}</h2>
+  <h2>{{ post.title }}</h2>
   <hr>
   <a href="{% url 'posts:index' %}">뒤로가기</a>
   <hr>
-  <h4>{{ post.content|linebreaks }}</h4>
+  <h4>작성자: ehddnr5352</h4>
+  <hr>
+  <h5>{{ post.content|linebreaks }}</h5>
   <hr>
   <p>작성일: {{ post.created_at }}</p>
   <p>수정일: {{ post.updated_at }}</p>
@@ -17,5 +19,29 @@
     <button class="btn btn-danger">게시글 삭제</button>
   </form>
   
+
+  <hr>
+  <h3>댓글 목록</h3>
+  <hr>
+  {% if comments %}
+    {% for comment in comments %}
+      <div class="d-flex align-items-baseline mb-3">
+        <p class="mr-3">댓글 : {{ comment.content }}</p>
+        <form action="{% url 'posts:delete_comment' post.pk comment.pk %}" method="POST">
+          {% csrf_token %}
+          <button class="border-0 btn-danger">삭제</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>아직 작성된 댓글이 없습니다.</p>
+  {% endif %}
+
+  <form action="{% url 'posts:create_comment' post.pk %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form }}
+    <button class="btn btn-dark">작성하기</button>
+  </form>
+
   <hr>
 {% endblock  %}

@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
-from .models import Post
-from .forms import PostCreationForm, PostChangeForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Post, Comment
+from .forms import PostCreationForm, PostChangeForm, CommentCreationForm
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 def index(request):
@@ -27,8 +28,12 @@ def create(request):
 
 def detail(request, post_pk):
     post = Post.objects.get(pk=post_pk)
+    comments = post.comment_set.all()
+    comment_form = CommentCreationForm()
     context = {
         'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request, 'posts/detail.html', context)
 
@@ -54,3 +59,27 @@ def delete(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     post.delete()
     return redirect('posts:index')
+
+
+# 댓글관련 기능
+@require_POST
+def create_comment(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    comment_form = CommentCreationForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.post = post
+        comment.save()
+        print('오긴옴?')
+        return redirect('posts:detail', post_pk)
+    context = {
+        'comment_form': comment_form,
+    }
+    return render(request, 'posts:detail', context)
+
+
+@require_POST
+def delete_comment(request, post_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    comment.delete()
+    return redirect('posts:detail', post_pk)
